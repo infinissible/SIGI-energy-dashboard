@@ -1,8 +1,8 @@
 # SIGI Energy Dashboard
 
-SIGI Energy Dashboard is a real-time energy monitoring and analytics application developed for facility-scale solar and building energy analysis. It integrates data from building meters, solar inverters, and weather stations to provide live system visibility, historical trends, and operational insights through an interactive web dashboard.
+SIGI Energy Dashboard is a full-stack real-time energy monitoring and analytics application developed for CE-CERT at UCR facilities. It integrates telemetry from building meters, solar inverters, and weather stations to provide live system visibility, historical analysis, and operational insights through an interactive web dashboard.
 
-The platform is designed to help users monitor energy generation and consumption, evaluate power demand, and analyze the impact of solar generation on facility operations and utility cost savings.
+The platform supports real-time monitoring of power and energy data, short-term trend visualization, utility savings analysis, and event-based notification logic for disconnected or stale data streams.
 
 ## Demo
 
@@ -12,28 +12,34 @@ The platform is designed to help users monitor energy generation and consumption
 
 ## Overview
 
-The dashboard combines multiple data sources into a unified application for energy monitoring and reporting:
+The dashboard combines multiple data sources and software layers into a unified energy analytics platform:
 
-- **Meters and field devices**
+- **Field devices and telemetry sources**
   - 3 solar inverters
   - 3 building meters
   - 2 weather stations
+  - Shark meter telemetry collected through **Modbus**
 
 - **Frontend**
-  - Built with **TypeScript**
-  - Retrieves and visualizes data from backend APIs
+  - Built with **TypeScript**, **React**, **Vite**, and **Tailwind CSS**
+  - Uses **WebSocket** connections for real-time updates
+  - Retrieves analytics and reporting data from backend APIs
 
 - **Backend**
-  - Built with **Python**
-  - Reads processed data from a MySQL database
-  - Exposes APIs for the frontend
-  - Includes a notification system for data disconnects or power-loss-related events
+  - Built with **Python** and **Flask**
+  - Uses **Jinja** for server-side templating where needed
+  - Exposes APIs for time-series queries, analytics, and dashboard data
+  - Includes notification logic for disconnect and data restoration events
 
 - **Database and data pipeline**
-  - Meter data is collected from Shark meters and related field devices
-  - Real-time power demand data is processed at short intervals
-  - Energy data is processed at longer intervals for historical analysis
-  - Data is stored in **MySQL** and exported to CSV for logging and recordkeeping
+  - Telemetry is collected from field devices and processed into application-ready datasets
+  - Real-time power demand data is updated at short polling intervals
+  - Energy data is aggregated for historical and reporting views
+  - Processed data is stored in **MySQL**
+  - CSV files are generated for recordkeeping and export workflows
+
+- **Deployment**
+  - Hosted on **IIS**
 
 ## Features
 
@@ -43,57 +49,53 @@ The dashboard combines multiple data sources into a unified application for ener
   - energy generation
   - net energy across PV systems and facilities
 
-- Interactive plotting of real-time and historical data for:
-  - selected inverters
+- WebSocket-based live data updates for dashboard visualization
+
+- Interactive time-series plotting for selected:
+  - inverters
   - buildings
   - weather stations
 
-- Time-series visualization for periods of up to 7 days
+- Historical data visualization for periods of up to 7 days
 
-- Building-level analytics displayed through dashboard cards and summary views
+- Building-level energy analytics through dashboard summary cards
 
-- Energy trend graphs and reporting views for short-term analysis
+- Energy trend reporting and short-term analysis graphs
 
 - Savings analysis logic for estimating the effect of solar generation on utility bills
 
-- Notification and alarm logic for detecting stale, disconnected, or restored data streams
+- Notification and alarm logic for stale, disconnected, and restored telemetry streams
 
 ## Architecture
 
-The application is composed of three primary layers:
+The application is composed of the following layers:
 
-1. **Frontend**
-   - User interface and data visualization
-   - Built in TypeScript
-   - Consumes backend APIs
+1. **Telemetry ingestion**
+   - Modbus-based collection from Shark meters and connected field devices
 
-2. **Backend**
-   - Business logic, analytics, and API services
-   - Built in Python
-   - Handles notification logic and query processing
+2. **Data processing and persistence**
+   - Polling, transformation, and storage of telemetry data in MySQL
+   - Export support through CSV generation
 
-3. **Database / Data ingestion**
-   - Stores processed telemetry and analytics data in MySQL
-   - Receives data derived from meters, inverters, and weather stations
-   - Supports both real-time and historical reporting
+3. **Backend services**
+   - Flask-based APIs for dashboard queries, analytics, and notifications
+   - WebSocket support for real-time frontend updates
 
-## Use Cases
+4. **Frontend application**
+   - React and TypeScript interface for visualization, reporting, and monitoring
+   - Tailwind-based responsive UI
 
-This project is intended for:
-
-- real-time solar and facility energy monitoring
-- building-level energy analysis
-- operational visibility for distributed energy systems
-- utility savings estimation
-- dashboard-driven reporting for energy infrastructure
+5. **Deployment**
+   - Application hosted through IIS
 
 ## Tech Stack
 
-- **Frontend:** TypeScript
-- **Backend:** Python
+- **Frontend:** TypeScript, React, Vite, Tailwind CSS
+- **Backend:** Python, Flask, Jinja
+- **Real-time communication:** WebSocket
+- **Device communication:** Modbus
 - **Database:** MySQL
-- **Data sources:** building meters, inverters, weather stations
-- **Output:** interactive dashboards, analytics views, CSV logging
+- **Deployment:** IIS
 
 ## Notes
 
