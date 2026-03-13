@@ -1,0 +1,56 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Frontend
+node_modules/
+frontend/node_modules/
+frontend/build/
+dist/
+dist-ssr/
+frontend/dist/
+frontend/dist-ssr/
+*.local
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+backend/venv/
+backend/.venv/
+*.egg-info/
+
+# Environment variables
+.env
+.env.*
+*.env.*
+
+# Backend secrets/private files
+backend/.env
+backend/.env.*
+backend/config.py
+backend/db.py
+backend/test_shark200s.py
+backend/test_socket.py
+backend/api_test.py
+
+# Editor junk
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Backup files
+*.bak
+*.tmp
